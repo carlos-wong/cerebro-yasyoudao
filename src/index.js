@@ -6,6 +6,7 @@ const Preview = require("./Preview.jsx").default;
 const md5 = require("md5");
 const _ = require("lodash");
 const Sound = require("react-sound").default;
+const icon = require("./assets/icon.png");
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
@@ -33,6 +34,7 @@ function query_youdao(q, display) {
     let translated = await r.json();
     console.log("new r is:", translated.translation);
     return display({
+      icon,
       id: "dict-loading",
       title: `${q} - ${translated.translation[0]}`,
       getPreview: () => <Preview {...translated} />
@@ -57,7 +59,7 @@ export const fn = ({ term, display }) => {
     return;
   }
 
-  display({ id: "dict-loading", title: "Searching Youdao dict ..." });
+  display({ icon, id: "dict-loading", title: "Searching Youdao dict ..." });
 
   debounce_searchDict(query, display);
 };
