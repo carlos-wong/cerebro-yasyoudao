@@ -9,8 +9,8 @@ export default class Preview extends Component {
         <h2>{query}</h2>
         {basic && 
           <div>
+              <p>{basic["phonetic"]}, uk: {basic["uk-phonetic"]}, us: {basic["us-phonetic"]}</p>
             <h3>基本释义</h3>
-            <p>{basic.phoentic}</p>
             <ul>
               {basic.explains.map(v => 
                 <li key={v}>{v}</li>)}
