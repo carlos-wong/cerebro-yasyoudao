@@ -1,7 +1,6 @@
 "use strict";
 
 const React = require("react");
-const debounce = require("p-debounce");
 const { memoize } = require("cerebro-tools");
 const Preview = require("./Preview.jsx").default;
 const md5 = require("md5");

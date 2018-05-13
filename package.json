@@ -1,12 +1,11 @@
 {
   "name": "cerebro-yasyoudao",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "dependencies": {
     "cerebro-tools": "^0.1.8",
     "cerebro-ui": "^0.0.16",
     "lodash": "^4.17.10",
     "md5": "^2.2.1",
-    "p-debounce": "^1.0.0",
     "querystring": "^0.2.0",
     "react-sound": "^1.2.0"
   },
@@ -16,9 +15,9 @@
     "email": "huaixian.huang@gmail.com",
     "url": "https://github.com/carlos-wong/cerebro-yasyoudao"
   },
-    "keywords": [
+  "keywords": [
     "youdao",
-    "yes another youdao",
+    "yes-another-youdao-plugin",
     "cerebro",
     "cerebro-plugin"
   ],
@@ -28,10 +27,6 @@
     "cerebro-scripts": "0.0.25"
   },
   "main": "dist/index.js",
-  "keywords": [
-    "cerebro",
-    "cerebro-plugin"
-  ],
   "scripts": {
     "start": "cerebro-scripts start",
     "build": "cerebro-scripts build",

@@ -16,7 +16,7 @@ export default class Preview extends Component {
         {basic && (
           <div>
             <p>
-              {basic["phonetic"]}, uk: {basic["uk-phonetic"]}, us:{" "}
+              音标: {basic["phonetic"]}, uk: {basic["uk-phonetic"]}, us:{" "}
               {basic["us-phonetic"]}
             </p>
             <h3>基本释义</h3>
