@@ -4,8 +4,9 @@ const React = require("react");
 const debounce = require("p-debounce");
 const { memoize } = require("cerebro-tools");
 const Preview = require("./Preview.jsx").default;
-var md5 = require("md5");
+const md5 = require("md5");
 const _ = require("lodash");
+const Sound = require("react-sound").default;
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
@@ -27,7 +28,7 @@ function query_youdao(q, display) {
     doctype: "json",
     version: "1.1"
   });
-  console.log("dump fetch url is:", url);
+  // console.log("dump fetch url is:", url);
   return fetch(`${url}?${query}`).then(async r => {
     // console.log("query r is:", r.json());
     let translated = await r.json();
