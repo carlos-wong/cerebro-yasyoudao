@@ -52,14 +52,23 @@ function query_youdao(q, display) {
           if (data_remove_identification == null) {
             data_remove_identification = data;
           }
-          display({
-            icon,
-            id: "dict-explains" + data_remove_identification,
-            title: `回车拷贝 ${data_remove_identification}`,
-            onSelect: () => {
-              clipboard.writeText(data_remove_identification);
-            }
-          });
+          let data_after_separate = data_remove_identification.split(
+            /[；；。.]/
+          );
+          if (data_after_separate && data_after_separate.length > 0) {
+            data_after_separate.forEach((value, index) => {
+              if (value && value.length > 0) {
+                display({
+                  icon,
+                  id: "dict-explains" + value,
+                  title: `回车拷贝 ${value}`,
+                  onSelect: () => {
+                    clipboard.writeText(value);
+                  }
+                });
+              }
+            });
+          }
         });
       }
     }
