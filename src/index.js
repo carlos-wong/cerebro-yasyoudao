@@ -35,7 +35,6 @@ function query_youdao(q, display) {
   return fetch(`${url}?${query}`).then(async r => {
     // console.log("query r is:", r.json());
     let translated = await r.json();
-    console.log("new r is:", translated.l);
 
     display({
       icon,
@@ -48,12 +47,17 @@ function query_youdao(q, display) {
       let explains = translated.basic.explains;
       if (explains && explains.length > 0) {
         explains.forEach((data, index) => {
+          const match = data.match(/^\[.*\] (.+)$/);
+          let data_remove_identification = match ? match[1].trim() : null;
+          if (data_remove_identification == null) {
+            data_remove_identification = data;
+          }
           display({
             icon,
-            id: "dict-explains" + data,
-            title: `回车拷贝 ${data}`,
+            id: "dict-explains" + data_remove_identification,
+            title: `回车拷贝 ${data_remove_identification}`,
             onSelect: () => {
-              clipboard.writeText(data);
+              clipboard.writeText(data_remove_identification);
             }
           });
         });
