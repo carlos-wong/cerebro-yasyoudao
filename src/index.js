@@ -71,12 +71,20 @@ const queryFromTerm = term => {
   return match ? match[1].trim() : null;
 };
 
+const queryFromTermShortcurt = term => {
+  const match = term.match(/^d (.+)$/);
+  return match ? match[1].trim() : null;
+};
+
 export const fn = ({ term, display }) => {
   // Put your plugin code here
-  const query = queryFromTerm(term);
+  let query = queryFromTerm(term);
 
   if (!query) {
-    return;
+    query = queryFromTermShortcurt(term);
+    if (!query) {
+      return;
+    }
   }
 
   display({ icon, id: "dict-loading", title: "Searching Youdao dict ..." });
