@@ -10,5 +10,6 @@ type `youdao` to translate
 
 # Changelog
 
-1. 禁止了自动播放发音的功能，扣的钱太快了，送的券估计支撑不住。
-2. 如果是查询中文对应的英文单词，则解析出单词列表，回车即可拷贝。
+1. disable auto play sound, the cost is too expensive
+2. parse the explain, and show quick action for copy the words
+3. show phonetic symbol only query english word
