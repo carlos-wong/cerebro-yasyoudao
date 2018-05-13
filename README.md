@@ -8,4 +8,7 @@ type `youdao` to translate
 
 # TODO
 
-1. show phonetic
+# Changelog
+
+1. 禁止了自动播放发音的功能，扣的钱太快了，送的券估计支撑不住。
+2. 如果是查询中文对应的英文单词，则解析出单词列表，回车即可拷贝。
