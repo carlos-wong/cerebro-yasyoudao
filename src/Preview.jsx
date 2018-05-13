@@ -3,10 +3,11 @@ import PropTypes from 'prop-types'
 
 export default class Preview extends Component {
   render() {
-    const {query, basic, web} = this.props
+    const {query, basic, web,speakUrl} = this.props
     return (
       <div>
         <h2>{query}</h2>
+        {speakUrl && <a hefr={speakUrl}>发音</a>}
         {basic && 
           <div>
               <p>{basic["phonetic"]}, uk: {basic["uk-phonetic"]}, us: {basic["us-phonetic"]}</p>
@@ -44,6 +45,7 @@ Preview.propTypes = {
     explains: PropTypes.array,
     phoentic: PropTypes.string,
   }),
+  speakUrl: PropTypes.string,
   translate: PropTypes.array,
   web: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,

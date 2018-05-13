@@ -5,12 +5,13 @@ const debounce = require("p-debounce");
 const { memoize } = require("cerebro-tools");
 const Preview = require("./Preview.jsx").default;
 var md5 = require("md5");
+const _ = require("lodash");
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
 const url = "http://openapi.youdao.com/api";
 
-function query_youdao(q) {
+function query_youdao(q, display) {
   var key = "LZFy0Ys97fCnWnb6f439ZD4hj37lOz8c";
   var salt = "ge9wo1si";
   let appKey = "0998295557105306";
@@ -27,10 +28,21 @@ function query_youdao(q) {
     version: "1.1"
   });
   console.log("dump fetch url is:", url);
-  return fetch(`${url}?${query}`).then(r => r.json());
+  return fetch(`${url}?${query}`).then(async r => {
+    // console.log("query r is:", r.json());
+    let translated = await r.json();
+    console.log("new r is:", translated.translation);
+    return display({
+      id: "dict-loading",
+      title: `${q} - ${translated.translation[0]}`,
+      getPreview: () => <Preview {...translated} />
+    });
+  });
 }
 
-const searchDict = debounce(memoize(query_youdao), 300);
+const searchDict = memoize(query_youdao);
+
+var debounce_searchDict = _.debounce(searchDict, 1600, { trailing: true });
 
 const queryFromTerm = term => {
   const match = term.match(/^youdao (.+)$/);
@@ -46,12 +58,6 @@ export const fn = ({ term, display }) => {
   }
 
   display({ id: "dict-loading", title: "Searching Youdao dict ..." });
-  searchDict(query).then(r => {
-    console.log("query r is:", r);
-    return display({
-      id: "dict-loading",
-      title: `${query} - ${r.translation[0]}`,
-      getPreview: () => <Preview {...r} />
-    });
-  });
+
+  debounce_searchDict(query, display);
 };

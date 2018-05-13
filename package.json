@@ -4,6 +4,7 @@
   "dependencies": {
     "cerebro-tools": "^0.1.8",
     "cerebro-ui": "^0.0.16",
+    "lodash": "^4.17.10",
     "md5": "^2.2.1",
     "p-debounce": "^1.0.0",
     "querystring": "^0.2.0"
