@@ -10,6 +10,20 @@
     "querystring": "^0.2.0",
     "react-sound": "^1.2.0"
   },
+  "repository": "com/carlos-wong/cerebro-yasyoudao",
+  "author": {
+    "name": "carlos",
+    "email": "huaixian.huang@gmail.com",
+    "url": "https://github.com/carlos-wong/cerebro-yasyoudao"
+  },
+    "keywords": [
+    "youdao",
+    "yes another youdao",
+    "cerebro",
+    "cerebro-plugin"
+  ],
+  "license": "MIT",
+  "description": "yes another youdao plugin",
   "devDependencies": {
     "cerebro-scripts": "0.0.25"
   },
