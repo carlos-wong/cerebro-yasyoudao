@@ -2,16 +2,26 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 const Sound = require("react-sound").default;
 
+const play_sound = false;
+
 export default class Preview extends Component {
   render() {
     const { query, basic, web, speakUrl } = this.props;
     return (
       <div>
-        <Sound
-          url={speakUrl}
-          playStatus={Sound.status.PLAYING}
-          playFromPosition={300 /* in milliseconds */}
-        />
+        {() => {
+          if (play_sound) {
+            return (
+              speakUrl && (
+                <Sound
+                  url={speakUrl}
+                  playStatus={Sound.status.PLAYING}
+                  playFromPosition={300 /* in milliseconds */}
+                />
+              )
+            );
+          }
+        }}
         <h2>{query}</h2>
         {basic && (
           <div>
