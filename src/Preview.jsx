@@ -44,7 +44,6 @@ Preview.propTypes = {
     explains: PropTypes.array,
     phoentic: PropTypes.string,
   }),
-  errorCode: PropTypes.number,
   translate: PropTypes.array,
   web: PropTypes.arrayOf(PropTypes.shape({
     key: PropTypes.string,

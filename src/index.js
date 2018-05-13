@@ -4,20 +4,29 @@ const React = require("react");
 const debounce = require("p-debounce");
 const { memoize } = require("cerebro-tools");
 const Preview = require("./Preview.jsx").default;
+var md5 = require("md5");
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
-const url = "http://fanyi.youdao.com/openapi.do";
+const url = "http://openapi.youdao.com/api";
 
 function query_youdao(q) {
+  var key = "LZFy0Ys97fCnWnb6f439ZD4hj37lOz8c";
+  var salt = "ge9wo1si";
+  let appKey = "0998295557105306";
+  var str1 = appKey + q + salt + key;
+  var sign = md5(str1);
+
   const query = qs.stringify({
-    keyfrom,
-    key,
+    q: q,
+    appKey: appKey,
+    salt: salt,
+    sign: sign,
     type: "data",
     doctype: "json",
-    version: "1.1",
-    q
+    version: "1.1"
   });
+  console.log("dump fetch url is:", url);
   return fetch(`${url}?${query}`).then(r => r.json());
 }
 

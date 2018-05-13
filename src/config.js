@@ -5,8 +5,8 @@ module.exports = {
     name: "Translate in youdao dict"
   },
   youdao: {
-    keyfrom: "lcjsky",
-    key: "1108318610"
+    appKey: "0998295557105306",
+    salt: "ge9wo1si"
   },
   debounce: 300
 };
