@@ -10,6 +10,8 @@ type `youdao` to translate
 
 # Changelog
 
-1. disable auto play sound, the cost is too expensive
-2. parse the explain, and show quick action for copy the words
-3. show phonetic symbol only query english word
+1. 还是不要播声音了，太贵了，需要的人可以自行定制，或者有好的众筹方式可以提 issue
+2. 解析基本释义，并转换为列表可以被快速拷贝
+3. 只有显示英文单词的时候才显示音标
+4. 去掉基本释义的分类标识文字
+5. 按照分隔符显示基本释义中的多个词条
