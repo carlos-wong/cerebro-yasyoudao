@@ -42,7 +42,7 @@ function query_youdao(q, display) {
 
 const searchDict = memoize(query_youdao);
 
-var debounce_searchDict = _.debounce(searchDict, 1600, { trailing: true });
+var debounce_searchDict = _.debounce(searchDict, 800, { trailing: true });
 
 const queryFromTerm = term => {
   const match = term.match(/^youdao (.+)$/);
