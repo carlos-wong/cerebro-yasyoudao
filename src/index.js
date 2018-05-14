@@ -9,7 +9,7 @@ const _ = require("lodash");
 const Sound = require("react-sound").default;
 const icon = require("./assets/icon.png");
 const log = require("loglevel");
-log.setLevel("trace");
+log.setLevel("silent");
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
@@ -49,52 +49,72 @@ function query_youdao(q, display) {
       let explains = translated.basic.explains;
       let webExplains = translated.web;
 
-      if (explains && explains.length > 0) {
-        explains.forEach((data, index) => {
-          const match = data.match(/^\[.*\] (.+)$/);
-          let data_remove_identification = match ? match[1].trim() : null;
-          if (data_remove_identification == null) {
-            data_remove_identification = data;
-          }
-          let data_after_separate = data_remove_identification.split(
-            /[；；。.]/
-          );
-          if (data_after_separate && data_after_separate.length > 0) {
-            data_after_separate.forEach((value, index) => {
-              if (value && value.length > 0) {
-                display({
-                  icon,
-                  id: "dict-explains" + value,
-                  title: `[copy] ${value}`,
-                  onSelect: () => {
-                    clipboard.writeText(value);
-                  }
-                });
-              }
-            });
+      let ret = show_basic_explain(explains, display);
+      ret = _.uniq(_.concat(ret, show_web_explain(webExplains, display)));
+      log.debug("query ret is:", ret);
+      ret.forEach((value, index) => {
+        display({
+          icon,
+          id: "dict-explains" + value,
+          title: `[copy] ${value}`,
+          onSelect: () => {
+            clipboard.writeText(value);
           }
         });
-      }
-      show_web_explain(webExplains, display);
+      });
     }
   });
 }
 
+function show_basic_explain(explains, display) {
+  if (explains && explains.length > 0) {
+    let ret = [];
+    explains.forEach((data, index) => {
+      const match = data.match(/^\[.*\] (.+)$/);
+      let data_remove_identification = match ? match[1].trim() : null;
+      if (data_remove_identification == null) {
+        data_remove_identification = data;
+      }
+      let data_after_separate = data_remove_identification.split(/[；；。.]/);
+      if (data_after_separate && data_after_separate.length > 0) {
+        data_after_separate.forEach((value, index) => {
+          if (value && value.length > 0) {
+            ret[ret.length] = value;
+            // display({
+            //   icon,
+            //   id: "dict-explains" + value,
+            //   title: `[copy] ${value}`,
+            //   onSelect: () => {
+            //     clipboard.writeText(value);
+            //   }
+            // });
+          }
+        });
+      }
+    });
+    return ret;
+  } else {
+    return [];
+  }
+}
+
 function show_web_explain(webExplains, display) {
+  let ret = [];
   if (webExplains && webExplains.length > 0) {
     let firstValue = webExplains[0].value;
     firstValue.forEach((data, index) => {
-      log.debug("data is:", data);
-      display({
-        icon,
-        id: "dict-web-explains" + data,
-        title: `[copy] ${data}`,
-        onSelect: () => {
-          clipboard.writeText(data);
-        }
-      });
+      ret[ret.length] = data;
+      // display({
+      //   icon,
+      //   id: "dict-web-explains" + data,
+      //   title: `[copy] ${data}`,
+      //   onSelect: () => {
+      //     clipboard.writeText(data);
+      //   }
+      // });
     });
   }
+  return ret;
 }
 
 const searchDict = memoize(query_youdao);
