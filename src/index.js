@@ -8,6 +8,8 @@ const md5 = require("md5");
 const _ = require("lodash");
 const Sound = require("react-sound").default;
 const icon = require("./assets/icon.png");
+const log = require("loglevel");
+log.setLevel("trace");
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
@@ -45,6 +47,8 @@ function query_youdao(q, display) {
 
     if (translated.l === youdao_zh_2_en) {
       let explains = translated.basic.explains;
+      let webExplains = translated.web;
+
       if (explains && explains.length > 0) {
         explains.forEach((data, index) => {
           const match = data.match(/^\[.*\] (.+)$/);
@@ -61,7 +65,7 @@ function query_youdao(q, display) {
                 display({
                   icon,
                   id: "dict-explains" + value,
-                  title: `回车拷贝 ${value}`,
+                  title: `[copy] ${value}`,
                   onSelect: () => {
                     clipboard.writeText(value);
                   }
@@ -71,8 +75,26 @@ function query_youdao(q, display) {
           }
         });
       }
+      show_web_explain(webExplains, display);
     }
   });
+}
+
+function show_web_explain(webExplains, display) {
+  if (webExplains && webExplains.length > 0) {
+    let firstValue = webExplains[0].value;
+    firstValue.forEach((data, index) => {
+      log.debug("data is:", data);
+      display({
+        icon,
+        id: "dict-web-explains" + data,
+        title: `[copy] ${data}`,
+        onSelect: () => {
+          clipboard.writeText(data);
+        }
+      });
+    });
+  }
 }
 
 const searchDict = memoize(query_youdao);

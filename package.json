@@ -5,6 +5,7 @@
     "cerebro-tools": "^0.1.8",
     "cerebro-ui": "^0.0.16",
     "lodash": "^4.17.10",
+    "loglevel": "^1.6.1",
     "md5": "^2.2.1",
     "querystring": "^0.2.0",
     "react-sound": "^1.2.0"
