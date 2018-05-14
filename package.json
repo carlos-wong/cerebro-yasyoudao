@@ -1,6 +1,6 @@
 {
   "name": "cerebro-yasyoudao",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "dependencies": {
     "cerebro-tools": "^0.1.8",
     "cerebro-ui": "^0.0.16",
