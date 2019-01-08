@@ -10,6 +10,7 @@ const Sound = require("react-sound").default;
 const icon = require("./assets/icon.png");
 const log = require("loglevel");
 log.setLevel("silent");
+// log.setLevel("debug");
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
@@ -17,7 +18,7 @@ const url = "http://openapi.youdao.com/api";
 
 const youdao_zh_2_en = "zh-CHS2EN";
 
-function query_youdao(q, display) {
+function query_youdao(q, scope,keeysearch) {
   var key = "LZFy0Ys97fCnWnb6f439ZD4hj37lOz8c";
   var salt = "ge9wo1si";
   let appKey = "0998295557105306";
@@ -33,38 +34,49 @@ function query_youdao(q, display) {
     doctype: "json",
     version: "1.1"
   });
-  // console.log("dump fetch url is:", url);
   return fetch(`${url}?${query}`).then(async r => {
-    // console.log("query r is:", r.json());
     let translated = await r.json();
-
-    display({
+    let display_list = [];
+    log.debug('dump translated is:',translated);
+    scope.display({
       icon,
-      id: "dict-loading",
+      id: keeysearch || "dict-loading",
       title: `${q} - ${translated.translation[0]}`,
-      getPreview: () => <Preview {...translated} />
+      onSelect: () => {
+            clipboard.writeText(q);
+      },
+      getPreview: () => <Preview {...translated} />,
     });
-
+    // display_list[display_list.length] = "dict-loading"+keeysearch;
     if (translated.l === youdao_zh_2_en) {
       let explains = translated.basic.explains;
       let webExplains = translated.web;
 
-      let ret = show_basic_explain(explains, display);
-      ret = _.uniq(_.concat(ret, show_web_explain(webExplains, display)));
+      let ret = show_basic_explain(explains, scope.display);
+      ret = _.uniq(_.concat(ret, show_web_explain(webExplains, scope.display)));
       log.debug("query ret is:", ret);
       ret.forEach((value, index) => {
-        display({
+        display_list[display_list.length] = "dict-explains" + value;
+        scope.display({
           icon,
           id: "dict-explains" + value,
           title: `[copy] ${value}`,
           onSelect: () => {
             clipboard.writeText(value);
+          },
+          onKeyDown: (event) => {
+            if ((event.metaKey || event.ctrlKey) && event.keyCode === 39) {
+              log.debug('dump event key code is:',event.keyCode,' try to search this word');
+              log.debug('scope is:',scope);
+              query_youdao(value, scope,"dict-explains" + value);
+            }
           }
         });
       });
     }
   });
 }
+
 
 function show_basic_explain(explains, display) {
   if (explains && explains.length > 0) {
@@ -131,18 +143,18 @@ const queryFromTermShortcurt = term => {
   return match ? match[1].trim() : null;
 };
 
-export const fn = ({ term, display }) => {
+export const fn = (scope) => {
   // Put your plugin code here
-  let query = queryFromTerm(term);
+  let query = queryFromTerm(scope.term);
 
   if (!query) {
-    query = queryFromTermShortcurt(term);
+    query = queryFromTermShortcurt(scope.term);
     if (!query) {
       return;
     }
   }
 
-  display({ icon, id: "dict-loading", title: "Searching Youdao dict ..." });
+  scope.display({ icon, id: "dict-loading", title: "Searching Youdao dict ..." });
 
-  debounce_searchDict(query, display);
+  debounce_searchDict(query, scope,false);
 };
