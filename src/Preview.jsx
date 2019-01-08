@@ -18,11 +18,12 @@ export default class Preview extends Component {
                   url={speakUrl}
                   playStatus={Sound.status.PLAYING}
                   playFromPosition={300 /* in milliseconds */}
-                />
+                  />
               )
             );
           }
         }}
+        <div style={{"height": "100px"}}></div>
         <h2>{query}</h2>
         {basic && (
           <div>
