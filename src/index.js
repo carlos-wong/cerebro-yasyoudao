@@ -10,13 +10,13 @@ const Sound = require("react-sound").default;
 const icon = require("./assets/icon.png");
 const log = require("loglevel");
 log.setLevel("silent");
-// log.setLevel("debug");
+//log.setLevel("debug");
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
 const url = "http://openapi.youdao.com/api";
 
-const youdao_zh_2_en = "zh-CHS2EN";
+const youdao_zh_2_en = "zh-CHS2en";
 
 function query_youdao(q, scope,keeysearch) {
   var key = "LZFy0Ys97fCnWnb6f439ZD4hj37lOz8c";
