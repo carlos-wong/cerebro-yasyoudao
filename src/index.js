@@ -43,7 +43,7 @@ function query_youdao(q, scope,keeysearch) {
       id: keeysearch || "dict-loading",
       title: `${q} - ${translated.translation[0]}`,
       onSelect: () => {
-            clipboard.writeText(q);
+        clipboard.writeText(_.toLower(q));
       },
       getPreview: () => <Preview {...translated} />,
     });
@@ -62,7 +62,7 @@ function query_youdao(q, scope,keeysearch) {
           id: "dict-explains" + value,
           title: `[copy] ${value}`,
           onSelect: () => {
-            clipboard.writeText(value);
+            clipboard.writeText(_.toLower(value));
           },
           onKeyDown: (event) => {
             if ((event.metaKey || event.ctrlKey) && event.keyCode === 39) {
