@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 const Sound = require("react-sound").default;
 
 const play_sound = false;
-const youdao_en_2_zh = "EN2zh-CHS";
+const youdao_en_2_zh = "en2zh-CHS";
 
 export default class Preview extends Component {
   render() {
@@ -33,7 +33,6 @@ export default class Preview extends Component {
                 {basic["us-phonetic"]}
               </p>
             )}
-
             <h3>基本释义</h3>
             <ul>{basic.explains.map(v => <li key={v}>{v}</li>)}</ul>
           </div>

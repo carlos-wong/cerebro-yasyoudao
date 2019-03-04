@@ -10,7 +10,7 @@ const Sound = require("react-sound").default;
 const icon = require("./assets/icon.png");
 const log = require("loglevel");
 log.setLevel("silent");
-//log.setLevel("debug");
+// log.setLevel("debug");
 
 const { keyfrom, key } = require("./config").youdao;
 const qs = require("querystring");
